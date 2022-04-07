@@ -1,0 +1,28 @@
+<div class="row mt-5 mb-5">
+    <div class="col-4 m-auto">
+        <div class="card">
+            <div class="card-header">
+                Login
+            </div>
+            <div class="card-body">
+                <div *ngIf='errorMessage' class="alert alert-danger">{{errorMessage}}</div>
+                
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                    <div class="mb-3 mt-3">
+                        <label for="exampleInputEmail1" class="form-label">Username:</label>
+                        <input type="text" formControlName="UserName" [class.is-valid]='UserName.valid'
+                            [class.is-invalid]='UserName.dirty && UserName.invalid' class="form-control"
+                            id="exampleInputEmail1" autofocus>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Password:</label>
+                        <input type="password" formControlName="Password" [class.is-valid]='Password.valid'
+                            [class.is-invalid]='Password.dirty && Password.invalid' class="form-control"
+                            id="exampleInputPassword1">
+                    </div>
+                    <button type="submit" class="btn btn-primary float-end" [disabled]='loginForm.invalid'>Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
