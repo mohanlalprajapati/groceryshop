@@ -9,11 +9,11 @@ import { GroceryService } from '../../services/grocery.service';
   styleUrls: ['./grocery-list.component.css']
 })
 export class GroceryListComponent implements OnInit {
-  lstGroceryList! : IGroceryList[]
+  lstGroceryList?: IGroceryList[] ;
   constructor(private groceryService:GroceryService) { }
 
   ngOnInit(): void {
-    this.groceryService.getGroceryList().subscribe({next: (result) => {
+    this.groceryService.getAllGroceryList().subscribe({next: (result) => {
         this.lstGroceryList = result;
     },error: (error) => {
       console.log("No list")
@@ -23,7 +23,9 @@ export class GroceryListComponent implements OnInit {
   deleteGroceryList(id : number) : void {
      const response = confirm("Do you really want to delete list?");
      if(response) {
-        alert("Delete code will go here");
+        this.groceryService.deleteGroceryList(id).subscribe(next => {
+            this.lstGroceryList = this.lstGroceryList?.filter(item => item.id !== id);
+        });
      }
   }
 

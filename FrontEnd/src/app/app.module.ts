@@ -16,6 +16,7 @@ import { GroceryListComponent } from './grocery/grocery-list/grocery-list.compon
 import { GroceryDetailComponent } from './grocery/grocery-detail/grocery-detail.component';
 import {RouterModule} from '@angular/router';
 
+
 @NgModule({
   declarations: [
     AppComponent,

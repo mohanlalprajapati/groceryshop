@@ -1,24 +1,43 @@
-<router-outlet></router-outlet>
-<a href="#" [routerLink]="['/create/']" class="btn btn-success">New GroceryList</a>
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th scope="col">#</th>
-    <th scope="col">Name</th>
-    <th scope="col"></th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let grocerylist of lstGroceryList; index as i">
-    <th scope="row">{{ i + 1 }}</th>
-    <td>
-      {{ grocerylist.name }}
-    </td>
-    <td>
-          <a href="#" [routerLink]="['/edit', grocerylist.id]" class="btn btn-primary">Edit</a>&nbsp;
-          <button class="btn btn-danger" type="button" (click)="deleteGroceryList(grocerylist.id);" >Delete</button>
-    </td>
+<div class="row mt-3">
 
-  </tr>
-  </tbody>
-</table>
+  <div class="col">
+    <a href="#"  [routerLink]="['/create/']" class="btn btn-success float-end mb-3">New GroceryList</a>
+  </div>
+</div>
+<div class="row">
+
+  <div class="col">
+    <table class="table table-striped" *ngIf="lstGroceryList && lstGroceryList.length>0">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Created Date</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let grocerylist of lstGroceryList; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>
+            {{ grocerylist.name }}
+          </td>
+          <td>
+            {{grocerylist.created_date| date}}
+          </td>
+          <td>
+            <a href="#" [routerLink]="['/edit', grocerylist.id]" class="btn btn-primary">Edit</a>&nbsp;
+            <button class="btn btn-danger" type="button" (click)="deleteGroceryList(grocerylist.id);">Delete</button>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="lstGroceryList?.length===0">
+      <ngb-alert [dismissible]="false">
+        No list is available. Please add some list.
+      </ngb-alert>
+    </div>
+  </div>
+
+</div>

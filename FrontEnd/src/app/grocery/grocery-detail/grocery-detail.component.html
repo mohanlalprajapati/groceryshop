@@ -1,1 +1,97 @@
-<p>grocery-detail works!</p>
+<div class="row mt-3 mb-5">
+    <div class="col m-auto">
+        <form [formGroup]="groceryDetailForm" (ngSubmit)="onSubmit()">
+            <div class="card">
+                <div class="card-header">
+                    Grocery List
+
+                    <button type="submit" [disabled]="GroceryItems.length == 0 || groceryDetailForm.invalid" class="btn btn-primary float-end">Submit</button>
+                </div>
+                <div class="card-body">
+                    <div *ngIf='errorMessage' class="alert alert-danger">{{errorMessage}}</div>
+                    <div class="mb-3 mt-3">
+                        <label for="txtName" class="form-label">Grocery List Name:</label>
+                        <input type="text" formControlName="name" [class.is-valid]='GroceryListName.valid'
+                            [class.is-invalid]='GroceryListName.dirty && GroceryListName.invalid' class="form-control"
+                            id="txtName" autofocus>
+                    </div>
+                    <button type="button" [disabled]="groceryDetailForm.get('items')?.invalid" (click)="addGrocreyItemControl();" class="btn btn-primary float-end">Add
+                        Item</button><br>
+                    <ng-container formArrayName="items">
+                        <table class="table table-striped" >
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Item Name</th>
+                                    <th scope="col">Brand Name</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Unit Type</th>
+                                    <th scope="col">Remark</th>
+                                    <th scope="col">Mark as purchased</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let groceryItem of GroceryItems.controls; let i = index" [formGroupName]="i">
+
+                                <tr>
+                                    <th class="align-middle" scope="row">{{ i + 1 }}</th>
+                                    <td>
+                                        <div class="mb-3 mt-3 col-auto">
+                                            <label for="txtItemName" class="visually-hidden">Item Name:</label>
+                                            <input  type="text" formControlName="item_name" placeholder="Item name"
+                                                class="form-control" id="txtItemName" autofocus>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="mb-3 mt-3 col-auto">
+                                            <label for="txtBrandName" class="visually-hidden">Brand Name:</label>
+                                            <input type="text" formControlName="brand_name" class="form-control"
+                                                id="txtBrandName" placeholder="Brand Name">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="mb-3 mt-3 col-auto">
+                                            <label for="txtQuantity" class="visually-hidden">Qauntity:</label>
+                                            <input type="text" formControlName="quantity" class="form-control"
+                                                id="txtQuantity" placeholder="Quantity#">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="mb-3 mt-3 col-auto">
+                                            <label for="cmbUnitType" class="visually-hidden">Unit Type:</label>
+                                            <select formControlName="unit_type" class="form-select" id="cmbUnitType" [compareWith]="compareUnitType">
+                                                <option [ngValue]="">Select</option>
+                                                <option [ngValue]="unitType.id"
+                                                    *ngFor="let unitType of this.lstUnitTypes">{{unitType.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="mb-3 mt-3 col-auto">
+                                            <label for="txtRemark" class="visually-hidden">Remark:</label>
+                                            <input type="text" placeholder="Remark" formControlName="remark"
+                                                class="form-control" id="txtRemark">
+                                        </div>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <div class="mb-3 mt-3 col-auto ">
+
+                                            <input #mark_purchased type="checkbox" (change)="onMarkPurchasedChange($event,i)" formControlName="is_purchased"
+                                                class="form-check-input align-center" id="chkIsPurchased">
+                                            <label for="chkIsPurchased" class="visually-hidden">Mark as
+                                                purchased</label>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle" >
+                                        <button *ngIf="!mark_purchased.checked" (click)="removeGroceryItem(i)" class="btn btn-danger"><i class="bi bi-x-square-fill"></i>Delete</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </ng-container>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
