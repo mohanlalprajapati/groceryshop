@@ -15,3 +15,14 @@
 # Test Backend
 1. docker-compose exec web bash
 2. python manage.py test
+
+
+# Enhancements to be done
+
+1. Delete multiple grocery items at once
+2. Mark purchased multiple grocery items at once
+3. Export and import funcionality through execl, csv, pdf
+4. Sorting and filtering in grocery list and grocery items
+5. Put validation class in grocery items.
+6. Make it comfortable for mobile view.
+7. Right test cases for front end.
