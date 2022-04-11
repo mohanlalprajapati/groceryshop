@@ -3,10 +3,13 @@ version: "3.9"
 services:
   db:
     image: postgres:14.0-alpine
+    restart: always
     volumes:
       - ./Postgresql/data:/var/lib/postgresql/data
     env_file:
       - ./.env
+    networks:
+      - groceryapp
   web:
     build: 
       context: ./BackEnd
@@ -18,8 +21,11 @@ services:
       - "8000:8000"
     env_file:
       - ./.env
+    restart: always
     depends_on:
       - db
+    networks:
+      - groceryapp
   frontend:
     build:
       context: ./FrontEnd
@@ -29,3 +35,9 @@ services:
     depends_on:
       - db
       - web
+    restart: always
+    networks:
+      - groceryapp
+
+networks:
+  groceryapp:
