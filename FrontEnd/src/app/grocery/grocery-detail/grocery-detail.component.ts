@@ -82,7 +82,7 @@ export class GroceryDetailComponent implements OnInit {
 
   onSubmit() {
     if (this.groceryDetailForm.valid) {
-      const groceryList = this.groceryDetailForm.value;
+      const groceryList = this.groceryDetailForm.getRawValue();
 
       if (this.groceryListId) {
         this.groceryService.updateGroceryList(this.groceryListId, groceryList).subscribe({
@@ -94,7 +94,6 @@ export class GroceryDetailComponent implements OnInit {
           error: this.handleError
         });
       } else {
-        console.log(this.groceryDetailForm.value);
         this.groceryService.addGroceryList(groceryList).subscribe({
           next: (result) => {
 
