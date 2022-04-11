@@ -5,7 +5,8 @@
                 <div class="card-header">
                     Grocery List
 
-                    <button type="submit" [disabled]="GroceryItems.length == 0 || groceryDetailForm.invalid" class="btn btn-primary float-end">Submit</button>
+                    <button type="submit" [disabled]="GroceryItems.length == 0 || groceryDetailForm.invalid"
+                        class="btn btn-primary float-end">Submit</button>
                 </div>
                 <div class="card-body">
                     <div *ngIf='errorMessage' class="alert alert-danger">{{errorMessage}}</div>
@@ -15,10 +16,11 @@
                             [class.is-invalid]='GroceryListName.dirty && GroceryListName.invalid' class="form-control"
                             id="txtName" autofocus>
                     </div>
-                    <button type="button" [disabled]="groceryDetailForm.get('items')?.invalid" (click)="addGrocreyItemControl();" class="btn btn-primary float-end">Add
+                    <button type="button" [disabled]="groceryDetailForm.get('items')?.invalid"
+                        (click)="addGrocreyItemControl();" class="btn btn-primary float-end">Add
                         Item</button><br>
                     <ng-container formArrayName="items">
-                        <table class="table table-striped" >
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -38,8 +40,10 @@
                                     <td>
                                         <div class="mb-3 mt-3 col-auto">
                                             <label for="txtItemName" class="visually-hidden">Item Name:</label>
-                                            <input  type="text" formControlName="item_name" placeholder="Item name"
-                                                class="form-control" id="txtItemName" autofocus>
+                                            <input type="text" formControlName="item_name" placeholder="Item name"
+                                                class="form-control" id="txtItemName" autofocus
+                                                [class.is-valid]='GroceryItems.controls[i].get("item_name")?.valid'
+                                                [class.is-invalid]='GroceryItems.controls[i].get("item_name")?.dirty && GroceryItems.controls[i].get("item_name")?.invalid'>
                                         </div>
                                     </td>
                                     <td>
@@ -53,14 +57,19 @@
                                         <div class="mb-3 mt-3 col-auto">
                                             <label for="txtQuantity" class="visually-hidden">Qauntity:</label>
                                             <input type="text" formControlName="quantity" class="form-control"
-                                                id="txtQuantity" placeholder="Quantity#">
+                                                id="txtQuantity" placeholder="Quantity#"
+                                                [class.is-valid]='GroceryItems.controls[i].get("quantity")?.valid'
+                                                [class.is-invalid]='GroceryItems.controls[i].get("quantity")?.dirty && GroceryItems.controls[i].get("quantity")?.invalid'>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="mb-3 mt-3 col-auto">
                                             <label for="cmbUnitType" class="visually-hidden">Unit Type:</label>
-                                            <select formControlName="unit_type" class="form-select" id="cmbUnitType" [compareWith]="compareUnitType">
-                                                <option [ngValue]="">Select</option>
+                                            <select formControlName="unit_type" class="form-select" id="cmbUnitType"
+                                                [compareWith]="compareUnitType"
+                                                [class.is-valid]='GroceryItems.controls[i].get("unit_type")?.valid'
+                                                [class.is-invalid]='GroceryItems.controls[i].get("unit_type")?.dirty && GroceryItems.controls[i].get("unit_type")?.invalid'>
+                                                <!-- <option [ngValue]="">Select</option> -->
                                                 <option [ngValue]="unitType.id"
                                                     *ngFor="let unitType of this.lstUnitTypes">{{unitType.name}}
                                                 </option>
@@ -77,14 +86,17 @@
                                     <td class="align-middle text-center">
                                         <div class="mb-3 mt-3 col-auto ">
 
-                                            <input #mark_purchased type="checkbox" (change)="onMarkPurchasedChange($event,i)" formControlName="is_purchased"
-                                                class="form-check-input align-center" id="chkIsPurchased">
+                                            <input #mark_purchased type="checkbox"
+                                                (change)="onMarkPurchasedChange($event,i)"
+                                                formControlName="is_purchased" class="form-check-input align-center"
+                                                id="chkIsPurchased">
                                             <label for="chkIsPurchased" class="visually-hidden">Mark as
                                                 purchased</label>
                                         </div>
                                     </td>
-                                    <td class="align-middle" >
-                                        <button *ngIf="!mark_purchased.checked" (click)="removeGroceryItem(i)" class="btn btn-danger"><i class="bi bi-x-square-fill"></i>Delete</button>
+                                    <td class="align-middle">
+                                        <button *ngIf="!mark_purchased.checked" (click)="removeGroceryItem(i)"
+                                            class="btn btn-danger"><i class="bi bi-x-square-fill"></i>Delete</button>
                                     </td>
                                 </tr>
                             </tbody>
