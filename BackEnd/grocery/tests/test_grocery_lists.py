@@ -7,23 +7,12 @@ from django.contrib.auth.models import User
 
 # Create your tests here.
 from grocery.models import GroceryList, UnitType, GroceryItem
+from grocery.tests.base_test_case import GroceryBaseTestCase
 
-
-class GroceryListTestCases(APITestCase):
+class GroceryListTestCases(GroceryBaseTestCase):
     def setUp(self):
         super().setUp()
-        username = "tim@me.com"
-        password = "strongP@assword!"
-        self.user = User.objects.create_user(username, username, password)
-
-        jwt_fetch_data = {"username": username, "password": password}
-
-        url = reverse("token_obtain_pair")
-        response = self.client.post(url, jwt_fetch_data, format="json")
-        token = response.data["access"]
-        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
         self.grocery_list_url = reverse("grocery:grocerylist-list")
-
         self.unit_type = UnitType.objects.create(name="kg")
 
     def test_grocery_list_get(self):

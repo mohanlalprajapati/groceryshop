@@ -1,29 +1,16 @@
-from django.test import TestCase
 from rest_framework import status
-from django.urls import reverse
-from rest_framework.test import APIClient, APITestCase
 from django.contrib.auth.models import User
-from rest_framework.test import APIClient
-from rest_framework_simplejwt.tokens import RefreshToken
-
+from django.urls import reverse
+from rest_framework import status
 
 # Create your tests here.
 from grocery.models import UnitType
+from grocery.tests.base_test_case import GroceryBaseTestCase
 
 
-class TestGroceryAppTestCases(APITestCase):
+class TestGroceryAppTestCases(GroceryBaseTestCase):
     def setUp(self):
         super().setUp()
-        username = "tim@me.com"
-        password = "strongP@assword!"
-        self.user = User.objects.create_user(username, username, password)
-
-        jwt_fetch_data = {"username": username, "password": password}
-
-        url = reverse("token_obtain_pair")
-        response = self.client.post(url, jwt_fetch_data, format="json")
-        token = response.data["access"]
-        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
         self.unit_type_url = reverse("grocery:unittype-list")
 
     def test_unit_type_get(self):

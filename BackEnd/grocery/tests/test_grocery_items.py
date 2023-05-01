@@ -9,21 +9,12 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 # Create your tests here.
 from grocery.models import GroceryItem, UnitType, GroceryList
+from grocery.tests.base_test_case import GroceryBaseTestCase
 
 
-class GroceryItemTestCases(APITestCase):
+class GroceryItemTestCases(GroceryBaseTestCase):
     def setUp(self):
         super().setUp()
-        username = "tim@me.com"
-        password = "strongP@assword!"
-        self.user = User.objects.create_user(username, username, password)
-
-        jwt_fetch_data = {"username": username, "password": password}
-
-        url = reverse("token_obtain_pair")
-        response = self.client.post(url, jwt_fetch_data, format="json")
-        token = response.data["access"]
-        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
         self.grocery_item_url = reverse("grocery:groceryitem-list")
         self.unit_type = UnitType.objects.create(name="Kg")
         self.grocery_list = GroceryList.objects.create(
